@@ -1,5 +1,13 @@
-const createTeamInfo = (d, el) => {
+const createOption = (data, team) => {
+	const teamSelect = document.getElementById(team);
+	data.forEach(t => {
+		let option = document.createElement('option');
+		option.text = t.team_name;
+		teamSelect.add(option);
+	});
+};
 
+const createTeamInfo = (d, el) => {
 	const parentDiv = document.getElementsByClassName(el)[0];
 	const img = document.createElement('img');
 	const n = document.createElement('div');
@@ -15,19 +23,20 @@ const createTeamInfo = (d, el) => {
 
 	img.setAttribute('class', 'logo-img');
 	img.src = d.team_logo;
-	parentDiv.append(img);
-	parentDiv.append(n);
-	parentDiv.append(f);
-	parentDiv.append(c);
+	parentDiv.prepend(n);
+	parentDiv.prepend(f);
+	parentDiv.prepend(c);
+	parentDiv.prepend(img);
 };
+
 document.addEventListener('DOMContentLoaded', () => {
 	d3.csv('/src/stats.csv', data => {
-		createTeamInfo(data[2], 'team-a');
-		createTeamInfo(data[10], 'team-b');
-		
-		createScoreBoard(data[2], '.team-a-stat')
-		createScoreBoard(data[10], '.team-b-stat');
-
+		createTeamInfo(data[0], 'team-a');
+		createTeamInfo(data[1], 'team-b');
+		createOption(data, 'team-select-a');
+		createOption(data, 'team-select-b');
+		createScoreBoard(data[0], '.team-a-stat');
+		createScoreBoard(data[1], '.team-b-stat');
 	});
 	//****** */
 });

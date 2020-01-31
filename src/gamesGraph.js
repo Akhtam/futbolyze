@@ -1,6 +1,18 @@
+const sumTotal = (teamData) => {
+	let totalScored = 0;
+	let totalConceded = 0;
+	teamData.forEach(d =>
+		d.type === 'scored'
+			? (totalScored += +d.amount)
+			: (totalConceded += +d.amount)
+	);
+	return {
+		totalScored,
+		totalConceded
+	}
+}
 
 const createScoreBoard = (team, div) => {
-	console.log(team);
 
 	let data = [
 		{ amount: team.goals_scored_min_0_to_10, time: 10, type: 'scored' },
@@ -23,12 +35,14 @@ const createScoreBoard = (team, div) => {
 		{ amount: team.goals_conceded_min_81_to_90, time: 90, type: 'conceded' }
     ];
 
-    
+	const {totalScored, totalConceded}  = sumTotal(data);
+
+	
 
 	// set the dimensions and margins of the graph
 	let margin = { top: 10, right: 30, bottom: 50, left: 60 },
-		width = 450 - margin.left - margin.right,
-		height = 350 - margin.top - margin.bottom;
+		width = 460 - margin.left - margin.right,
+		height = 400 - margin.top - margin.bottom;
 
 	// append the svg object to the body of the page
 	let svg = d3
@@ -78,38 +92,31 @@ const createScoreBoard = (team, div) => {
 
 
 
-	// Color scale: give me a specie name, I return a color
+	// Color scale: give me a type of goal, I return a color
 	let color = d3
 		.scaleOrdinal()
 		.domain(['scored', 'conceded'])
 		.range(['#008E9B', '#FF6F91']);
 
-	// Highlight the specie that is hovered
-	let highlight = function(d) {
-
+	// Highlight the amoun that is hovered
+	let highlight = function(d, action) {
 		type = d.type;
+		let size = action === 'mouseover' ? 8 : 11;
 
 		d3.selectAll('.dot')
 			.transition()
 			.duration(200)
 			.style('fill', 'lighgrey')
-			.attr('r', 7);
+			.attr('r', size);
 
 		d3.selectAll('.' + type)
 			.transition()
 			.duration(200)
 			.style('fill', color(type))
-			.attr('r', 10);
+			.attr('r', 11);
 	};
 
-	// Highlight the specie that is hovered
-	let doNotHighlight = function() {
-		d3.selectAll('.dot')
-			.transition()
-			.duration(200)
-			.style('fill', 'yellow')
-			.attr('r', 10);
-    };
+
 	//LINE
     svg.append('path')
 		.datum(data.slice(0, 9))
@@ -138,6 +145,49 @@ const createScoreBoard = (team, div) => {
 		);
 
 
+	let Scoreboard = d3
+		.select('.scoreboard')
+		.append('div')
+		.style('opacity', 1)
+		.attr('class', `tooltip`)
+		.style('padding', '5px')
+		.html(
+			`<span class='scored'>Scored</span>: ${totalScored}
+			<br />
+			<span class='conceded'>Conceded</span>: ${totalConceded} 
+			<br/> Minutes: Overall`
+		);
+
+			
+	// Three function that change the tooltip when user hover / move / leave a cell
+	let mouseover = function(d) {
+		Scoreboard.style('opacity', 1);
+	};
+	let mousemove = function(d) {
+		let mins = d.type == 'scored' ? 'scoredmin' : 'concmin'
+		Scoreboard.html(
+			` <span class='scored'>Scored</span>: ${
+				d.type === 'scored' ? d.amount : totalScored
+			} <br/> 
+				<span class='conceded'>Conceded</span>: ${
+					d.type === 'conceded' ? d.amount : totalConceded
+				}
+				<br />
+				<span class=${mins}>Minutes: ${d.time - 10} - ${d.time} </span>
+			`
+		);
+	};
+	let mouseleave = function(d) {
+		Scoreboard.html(
+			`<span class='scored'>Scored</span>: ${totalScored} 
+				<br/>
+			<span class='conceded'>Conceded</span>: ${totalConceded} 
+			<br/>
+				Minutes: Overall`
+		);
+	};
+
+
 
 	// Add dots
 	svg.append('g')
@@ -148,18 +198,26 @@ const createScoreBoard = (team, div) => {
 		.attr('class', (d) => 'dot ' + d.type)
 		.attr('cx', (d) => x(d.time))
 		.attr('cy', (d) => d.amount > 16 ? y(17) : y(d.amount))
-		.attr('r', 10)
+		.attr('r', 11)
 		.style('fill', (d) => color(d.type))
-		.on('mouseover', highlight)
+		.on('mouseover', (d) => {
+			mouseover(d)
+			highlight(d, 'mouseover');
+		})
+		.on('mousemove', mousemove)
+		.on('mouseleave',(d) => { 
+			mouseleave(d)
+			highlight(d,'mouseleave');
+		})
 };
 
-//   var dataset = [
+//   let dataset = [
 // 		{ name: 'Chrome', value: 21 },
 // 		{ name: 'Safari', value: 7 },
 // 		{ name: 'Others', value: 14 }
 //   ];
 
-//   var pie = d3.layout
+//   let pie = d3.layout
 // 		.pie()
 // 		.value(function(d) {
 // 			return d.value;
@@ -167,20 +225,20 @@ const createScoreBoard = (team, div) => {
 // 		.sort(null)
 // 		.padAngle(0.03);
 
-//   var w = 110,
+//   let w = 110,
 // 		h = 110;
 
-//   var outerRadius = w / 2;
-//   var innerRadius = 20;
+//   let outerRadius = w / 2;
+//   let innerRadius = 20;
 
-//   var color = d3.scale.category10();
+//   let color = d3.scale.category10();
 
-//   var arc = d3.svg
+//   let arc = d3.svg
 // 		.arc()
 // 		.outerRadius(outerRadius)
 // 		.innerRadius(innerRadius);
 
-//   var svg = d3
+//   let svg = d3
 // 		.select(team)
 // 		.append('svg')
 // 		.attr({
@@ -192,7 +250,7 @@ const createScoreBoard = (team, div) => {
 // 		.attr({
 // 			transform: 'translate(' + w / 2 + ',' + h / 2 + ')'
 // 		});
-//   var path = svg
+//   let path = svg
 // 		.selectAll('path')
 // 		.data(pie(dataset))
 // 		.enter()
@@ -207,14 +265,14 @@ const createScoreBoard = (team, div) => {
 //   path.transition()
 // 		.duration(1200)
 // 		.attrTween('d', function(d) {
-// 			var interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
+// 			let interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
 // 			return function(t) {
 // 				return arc(interpolate(t));
 // 			};
 // 		});
 
-//   var restOfTheData = function() {
-// 		var text = svg
+//   let restOfTheData = function() {
+// 		let text = svg
 // 			.selectAll('text')
 // 			.data(pie(dataset))
 // 			.enter()
