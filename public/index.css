@@ -1,0 +1,102 @@
+@import url("https://fonts.googleapis.com/css?family=Play:400,700&display=swap");
+body {
+  background-color: #1a1c33;
+  color: white;
+  margin: 0;
+  font-family: 'Play', sans-serif;
+  height: 100vh;
+}
+
+.navbar {
+  background: #2e2e4b;
+  height: 60px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.navbar .logo {
+  text-align: center;
+  margin: auto 0;
+  margin-left: 3%;
+  padding: 9px;
+  letter-spacing: 5px;
+  font-weight: 500;
+  font-size: 30px;
+  font-family: 'Play', sans-serif;
+}
+
+.navbar .contact-parent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: auto 0;
+  margin-right: 5%;
+  width: 15%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.navbar .contact-parent a {
+  text-decoration: none;
+  color: white;
+}
+
+.team-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  margin-top: 5%;
+}
+
+.info {
+  text-align: center;
+}
+
+.info div {
+  margin-top: 5px;
+  color: #ffe390;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 2px;
+}
+
+.info img {
+  height: 200px;
+}
+
+.info .info-name {
+  font-size: 22px;
+}
+
+.bubble {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  margin: 0 4%;
+  margin-top: 70px;
+  margin-bottom: 80px;
+}
+
+.stat {
+  width: 38%;
+  background-color: #3f458157;
+  border-radius: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+/*# sourceMappingURL=index.css.map */
