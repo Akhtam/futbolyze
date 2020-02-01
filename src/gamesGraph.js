@@ -14,6 +14,11 @@ const sumTotal = (teamData) => {
 
 const createScoreBoard = (team, div) => {
 
+		const parentDiv = document.getElementsByClassName(div.slice(1))[0];
+		const scoreboard = document.getElementsByClassName('scoreboard')[0];
+		if (parentDiv.firstChild) parentDiv.firstChild.remove();
+
+
 	let data = [
 		{ amount: team.goals_scored_min_0_to_10, time: 10, type: 'scored' },
 		{ amount: team.goals_scored_min_11_to_20, time: 20, type: 'scored' },
@@ -105,13 +110,13 @@ const createScoreBoard = (team, div) => {
 
 		d3.selectAll('.dot')
 			.transition()
-			.duration(200)
+			.duration(250)
 			.style('fill', 'lighgrey')
 			.attr('r', size);
 
 		d3.selectAll('.' + type)
 			.transition()
-			.duration(200)
+			.duration(250)
 			.style('fill', color(type))
 			.attr('r', 11);
 	};
