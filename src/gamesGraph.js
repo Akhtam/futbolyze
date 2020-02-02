@@ -1,4 +1,4 @@
-const sumTotal = (teamData) => {
+const sumTotal = teamData => {
 	let totalScored = 0;
 	let totalConceded = 0;
 	teamData.forEach(d =>
@@ -9,15 +9,17 @@ const sumTotal = (teamData) => {
 	return {
 		totalScored,
 		totalConceded
-	}
-}
+	};
+};
 
 const createScoreBoard = (team, div) => {
+	const parentDiv = document.getElementsByClassName(div.slice(1))[0];
+	const tooltips = document.getElementsByClassName(`tooltip-${div.slice(1)}`);
+	while (tooltips.length > 0) {
+		tooltips[0].parentNode.removeChild(tooltips[0]);
+	}
 
-		const parentDiv = document.getElementsByClassName(div.slice(1))[0];
-		const scoreboard = document.getElementsByClassName('scoreboard')[0];
-		if (parentDiv.firstChild) parentDiv.firstChild.remove();
-
+	if (parentDiv.firstChild) parentDiv.firstChild.remove();
 
 	let data = [
 		{ amount: team.goals_scored_min_0_to_10, time: 10, type: 'scored' },
@@ -30,19 +32,45 @@ const createScoreBoard = (team, div) => {
 		{ amount: team.goals_scored_min_71_to_80, time: 80, type: 'scored' },
 		{ amount: team.goals_scored_min_81_to_90, time: 90, type: 'scored' },
 		{ amount: team.goals_conceded_min_0_to_10, time: 10, type: 'conceded' },
-		{ amount: team.goals_conceded_min_11_to_20, time: 20, type: 'conceded' },
-		{ amount: team.goals_conceded_min_21_to_30, time: 30, type: 'conceded' },
-		{ amount: team.goals_conceded_min_31_to_40, time: 40, type: 'conceded' },
-		{ amount: team.goals_conceded_min_41_to_50, time: 50, type: 'conceded' },
-		{ amount: team.goals_conceded_min_51_to_60, time: 60, type: 'conceded' },
-		{ amount: team.goals_conceded_min_61_to_70, time: 70, type: 'conceded' },
-		{ amount: team.goals_conceded_min_71_to_80, time: 80, type: 'conceded' },
+		{
+			amount: team.goals_conceded_min_11_to_20,
+			time: 20,
+			type: 'conceded'
+		},
+		{
+			amount: team.goals_conceded_min_21_to_30,
+			time: 30,
+			type: 'conceded'
+		},
+		{
+			amount: team.goals_conceded_min_31_to_40,
+			time: 40,
+			type: 'conceded'
+		},
+		{
+			amount: team.goals_conceded_min_41_to_50,
+			time: 50,
+			type: 'conceded'
+		},
+		{
+			amount: team.goals_conceded_min_51_to_60,
+			time: 60,
+			type: 'conceded'
+		},
+		{
+			amount: team.goals_conceded_min_61_to_70,
+			time: 70,
+			type: 'conceded'
+		},
+		{
+			amount: team.goals_conceded_min_71_to_80,
+			time: 80,
+			type: 'conceded'
+		},
 		{ amount: team.goals_conceded_min_81_to_90, time: 90, type: 'conceded' }
-    ];
+	];
 
-	const {totalScored, totalConceded}  = sumTotal(data);
-
-	
+	const { totalScored, totalConceded } = sumTotal(data);
 
 	// set the dimensions and margins of the graph
 	let margin = { top: 10, right: 30, bottom: 50, left: 60 },
@@ -67,20 +95,20 @@ const createScoreBoard = (team, div) => {
 		.range([0, width]);
 	svg.append('g')
 		.attr('transform', 'translate(0,' + height + ')')
-        .call(d3.axisBottom(x));
-    svg.append('text')
-        .attr('text-anchor', 'end')
-        .attr('x', width)
-        .attr('y', height + margin.top + 30)
-        .text('MINUTES')
-        .style('fill', 'white');
-    svg.append('text')
-        .attr('text-anchor', 'end')
-        .attr('transform', 'rotate(-90)')
-        .attr('y', -margin.left + 25)
-        .attr('x', -margin.top)
-        .text('GOALS')
-        .style('fill', 'white');
+		.call(d3.axisBottom(x));
+	svg.append('text')
+		.attr('text-anchor', 'end')
+		.attr('x', width)
+		.attr('y', height + margin.top + 30)
+		.text('MINUTES')
+		.style('fill', 'white');
+	svg.append('text')
+		.attr('text-anchor', 'end')
+		.attr('transform', 'rotate(-90)')
+		.attr('y', -margin.left + 25)
+		.attr('x', -margin.top)
+		.text('GOALS')
+		.style('fill', 'white');
 
 	// Add Y axis
 	let y = d3
@@ -94,8 +122,6 @@ const createScoreBoard = (team, div) => {
 		.attr('stroke', 'white')
 		.style('font-size', 12)
 		.style('font-weight', 100);
-
-
 
 	// Color scale: give me a type of goal, I return a color
 	let color = d3
@@ -121,9 +147,8 @@ const createScoreBoard = (team, div) => {
 			.attr('r', 11);
 	};
 
-
 	//LINE
-    svg.append('path')
+	svg.append('path')
 		.datum(data.slice(0, 9))
 		.attr('fill', 'none')
 		.attr('stroke', '#DFE0DF')
@@ -136,7 +161,7 @@ const createScoreBoard = (team, div) => {
 				.y(d => (d.amount > 16 ? y(17) : y(d.amount)))
 		);
 	// LINE
-    svg.append('path')
+	svg.append('path')
 		.datum(data.slice(9))
 		.attr('fill', 'none')
 		.attr('stroke', '#DFE0DF')
@@ -149,12 +174,11 @@ const createScoreBoard = (team, div) => {
 				.y(d => y(d.amount))
 		);
 
-
 	let Scoreboard = d3
-		.select('.scoreboard')
+		.select(`.board-${div.slice(6)}`)
 		.append('div')
 		.style('opacity', 1)
-		.attr('class', `tooltip`)
+		.attr('class', `tooltip-${div.slice(1)} tooltip`)
 		.style('padding', '5px')
 		.html(
 			`<span class='scored'>Scored</span>: ${totalScored}
@@ -163,13 +187,12 @@ const createScoreBoard = (team, div) => {
 			<br/> Minutes: Overall`
 		);
 
-			
 	// Three function that change the tooltip when user hover / move / leave a cell
 	let mouseover = function(d) {
 		Scoreboard.style('opacity', 1);
 	};
 	let mousemove = function(d) {
-		let mins = d.type == 'scored' ? 'scoredmin' : 'concmin'
+		let mins = d.type == 'scored' ? 'scoredmin' : 'concmin';
 		Scoreboard.html(
 			` <span class='scored'>Scored</span>: ${
 				d.type === 'scored' ? d.amount : totalScored
@@ -192,28 +215,26 @@ const createScoreBoard = (team, div) => {
 		);
 	};
 
-
-
 	// Add dots
 	svg.append('g')
 		.selectAll('dot')
 		.data(data)
 		.enter()
 		.append('circle')
-		.attr('class', (d) => 'dot ' + d.type)
-		.attr('cx', (d) => x(d.time))
-		.attr('cy', (d) => d.amount > 16 ? y(17) : y(d.amount))
+		.attr('class', d => 'dot ' + d.type)
+		.attr('cx', d => x(d.time))
+		.attr('cy', d => (d.amount > 16 ? y(17) : y(d.amount)))
 		.attr('r', 11)
-		.style('fill', (d) => color(d.type))
-		.on('mouseover', (d) => {
-			mouseover(d)
+		.style('fill', d => color(d.type))
+		.on('mouseover', d => {
+			mouseover(d);
 			highlight(d, 'mouseover');
 		})
 		.on('mousemove', mousemove)
-		.on('mouseleave',(d) => { 
-			mouseleave(d)
-			highlight(d,'mouseleave');
-		})
+		.on('mouseleave', d => {
+			mouseleave(d);
+			highlight(d, 'mouseleave');
+		});
 };
 
 //   let dataset = [

@@ -1,7 +1,7 @@
 const createTeamInfo = (d, el) => {
 	const parentDiv = document.getElementsByClassName(el)[0];
 	if (parentDiv.children.length > 1) {
-		let n = 4;
+		let n = 3;
 		while (n > 0) {
 			parentDiv.firstChild.remove();
 			n--;
@@ -15,15 +15,11 @@ const createTeamInfo = (d, el) => {
 	f.setAttribute('class', 'info-f');
 	f.innerHTML = ` ${d.season}`;
 
-	const c = document.createElement('div');
-	c.setAttribute('class', 'logo-info');
-	c.innerHTML = `${d.country}`;
 
 	img.setAttribute('class', 'logo-img');
 	img.src = d.team_logo;
-	parentDiv.prepend(n);
 	parentDiv.prepend(f);
-	parentDiv.prepend(c);
+	parentDiv.prepend(n);
 	parentDiv.prepend(img);
 };
 

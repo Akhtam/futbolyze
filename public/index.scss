@@ -42,11 +42,13 @@ body {
 .team-info {
 	display: flex;
 	justify-content: space-evenly;
-	margin-top: 5%;
+	margin-top: 3%;
 }
+
 
 .info {
 	text-align: center;
+	width: 100%;
 	div {
 		margin-top: 5px;
 		color: #ffe390;
@@ -55,10 +57,11 @@ body {
 		letter-spacing: 2px;
 	}
 	img {
-		height: 200px;
+		height: 160px;
 	}
 	.info-name {
 		font-size: 22px;
+		width: 100%;
 	}
 }
 
@@ -106,4 +109,11 @@ body {
 	}
 }
 
-
+select {
+	height: 33px;
+    background: linear-gradient(to right, #11998e, #38ef7d);
+    border: none;
+    color: white;
+	font-size: 13px;
+	font-weight: 400;
+}

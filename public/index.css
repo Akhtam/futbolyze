@@ -56,11 +56,12 @@ body {
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
-  margin-top: 5%;
+  margin-top: 3%;
 }
 
 .info {
   text-align: center;
+  width: 100%;
 }
 
 .info div {
@@ -72,11 +73,12 @@ body {
 }
 
 .info img {
-  height: 200px;
+  height: 160px;
 }
 
 .info .info-name {
   font-size: 22px;
+  width: 100%;
 }
 
 .bubble {
@@ -132,5 +134,15 @@ body {
 
 .scoreboard .tooltip .concmin {
   color: #fc7695;
+}
+
+select {
+  height: 33px;
+  background: -webkit-gradient(linear, left top, right top, from(#11998e), to(#38ef7d));
+  background: linear-gradient(to right, #11998e, #38ef7d);
+  border: none;
+  color: white;
+  font-size: 13px;
+  font-weight: 400;
 }
 /*# sourceMappingURL=index.css.map */
