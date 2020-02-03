@@ -9,7 +9,7 @@ body {
 
 .navbar {
   background: #2e2e4b;
-  height: 60px;
+  height: 50px;
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -26,7 +26,7 @@ body {
   padding: 9px;
   letter-spacing: 5px;
   font-weight: 500;
-  font-size: 30px;
+  font-size: 23px;
   font-family: 'Play', sans-serif;
 }
 
@@ -40,7 +40,7 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 400;
 }
 
@@ -67,17 +67,17 @@ body {
 .info div {
   margin-top: 5px;
   color: #ffe390;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 400;
   letter-spacing: 2px;
 }
 
 .info img {
-  height: 160px;
+  height: 140px;
 }
 
 .info .info-name {
-  font-size: 22px;
+  font-size: 20px;
   width: 100%;
 }
 
@@ -89,13 +89,13 @@ body {
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
   margin: 0 4%;
-  margin-top: 70px;
+  margin-top: 50px;
   margin-bottom: 80px;
 }
 
 .stat {
   width: 38%;
-  background-color: #3f458157;
+  background-color: #31355657;
   border-radius: 10px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -136,6 +136,17 @@ body {
   color: #fc7695;
 }
 
+.scoreboard .tooltip img {
+  margin-left: 42%;
+  margin-right: 42%;
+  width: 16%;
+  height: 35px;
+}
+
+.scoreboard .board-b-stat {
+  margin-top: 12%;
+}
+
 select {
   height: 33px;
   background: -webkit-gradient(linear, left top, right top, from(#11998e), to(#38ef7d));
@@ -144,5 +155,9 @@ select {
   color: white;
   font-size: 13px;
   font-weight: 400;
+}
+
+.pl-logo {
+  height: 130px;
 }
 /*# sourceMappingURL=index.css.map */

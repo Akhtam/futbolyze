@@ -75,7 +75,7 @@ const createScoreBoard = (team, div) => {
 	// set the dimensions and margins of the graph
 	let margin = { top: 10, right: 30, bottom: 50, left: 60 },
 		width = 460 - margin.left - margin.right,
-		height = 400 - margin.top - margin.bottom;
+		height = 360 - margin.top - margin.bottom;
 
 	// append the svg object to the body of the page
 	let svg = d3
@@ -181,7 +181,9 @@ const createScoreBoard = (team, div) => {
 		.attr('class', `tooltip-${div.slice(1)} tooltip`)
 		.style('padding', '5px')
 		.html(
-			`<span class='scored'>Scored</span>: ${totalScored}
+			`<img src="${team.team_logo}"></img>
+			<br />
+			<span class='scored'>Scored</span>: ${totalScored}
 			<br />
 			<span class='conceded'>Conceded</span>: ${totalConceded} 
 			<br/> Minutes: Overall`
@@ -194,9 +196,11 @@ const createScoreBoard = (team, div) => {
 	let mousemove = function(d) {
 		let mins = d.type == 'scored' ? 'scoredmin' : 'concmin';
 		Scoreboard.html(
-			` <span class='scored'>Scored</span>: ${
-				d.type === 'scored' ? d.amount : totalScored
-			} <br/> 
+			`<img src="${team.team_logo}"></img>
+			 <br />
+			 <span class='scored'>Scored</span>: ${
+					d.type === 'scored' ? d.amount : totalScored
+				} <br/> 
 				<span class='conceded'>Conceded</span>: ${
 					d.type === 'conceded' ? d.amount : totalConceded
 				}
@@ -207,11 +211,14 @@ const createScoreBoard = (team, div) => {
 	};
 	let mouseleave = function(d) {
 		Scoreboard.html(
-			`<span class='scored'>Scored</span>: ${totalScored} 
+			`
+			<img src="${team.team_logo}"></img>
+			<br />
+			<span class='scored'>Scored</span>: ${totalScored} 
 				<br/>
 			<span class='conceded'>Conceded</span>: ${totalConceded} 
 			<br/>
-				Minutes: Overall`
+			Minutes: Overall`
 		);
 	};
 
@@ -236,87 +243,3 @@ const createScoreBoard = (team, div) => {
 			highlight(d, 'mouseleave');
 		});
 };
-
-//   let dataset = [
-// 		{ name: 'Chrome', value: 21 },
-// 		{ name: 'Safari', value: 7 },
-// 		{ name: 'Others', value: 14 }
-//   ];
-
-//   let pie = d3.layout
-// 		.pie()
-// 		.value(function(d) {
-// 			return d.value;
-// 		})
-// 		.sort(null)
-// 		.padAngle(0.03);
-
-//   let w = 110,
-// 		h = 110;
-
-//   let outerRadius = w / 2;
-//   let innerRadius = 20;
-
-//   let color = d3.scale.category10();
-
-//   let arc = d3.svg
-// 		.arc()
-// 		.outerRadius(outerRadius)
-// 		.innerRadius(innerRadius);
-
-//   let svg = d3
-// 		.select(team)
-// 		.append('svg')
-// 		.attr({
-// 			width: w,
-// 			height: h,
-// 			class: 'shadow'
-// 		})
-// 		.append('g')
-// 		.attr({
-// 			transform: 'translate(' + w / 2 + ',' + h / 2 + ')'
-// 		});
-//   let path = svg
-// 		.selectAll('path')
-// 		.data(pie(dataset))
-// 		.enter()
-// 		.append('path')
-// 		.attr({
-// 			d: arc,
-// 			fill: function(d, i) {
-// 				return color(d.data.name);
-// 			}
-// 		});
-
-//   path.transition()
-// 		.duration(1200)
-// 		.attrTween('d', function(d) {
-// 			let interpolate = d3.interpolate({ startAngle: 0, endAngle: 0 }, d);
-// 			return function(t) {
-// 				return arc(interpolate(t));
-// 			};
-// 		});
-
-//   let restOfTheData = function() {
-// 		let text = svg
-// 			.selectAll('text')
-// 			.data(pie(dataset))
-// 			.enter()
-// 			.append('text')
-// 			.transition()
-// 			.duration(200)
-// 			.attr('transform', function(d) {
-// 				return 'translate(' + arc.centroid(d) + ')';
-// 			})
-// 			.attr('dy', '.4em')
-// 			.attr('text-anchor', 'middle')
-// 			.text(function(d) {
-// 				return d.data.value;
-// 			})
-// 			.style({
-// 				fill: '#fff',
-// 				'font-size': '15px'
-// 			});
-//   };
-
-//   setTimeout(restOfTheData, 1000);

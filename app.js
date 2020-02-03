@@ -49,7 +49,7 @@ const createOption = (data, team) => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-	d3.csv('/src/stats.csv', data => {
+	d3.csv('stats.csv', data => {
 		createTeamInfo(data[0], 'team-a');
 		createTeamInfo(data[2], 'team-b');
 		createOption(data, 'team-select-a');
